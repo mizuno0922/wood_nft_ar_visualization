@@ -1,0 +1,11 @@
+{
+    "ID":"131",
+    "parentID":"61,62,63,64",
+    "name": "工具棚",
+    "description": "工具をいれるための机と棚",
+    "productor": "水野",
+    "date":"test",
+    "site":"test",
+    "image_path": "/images/131.jpg",
+    "model_path": "/models/131.obj"
+}

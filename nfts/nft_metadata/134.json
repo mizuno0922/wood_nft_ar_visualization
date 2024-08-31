@@ -1,0 +1,11 @@
+{
+    "ID":"134",
+    "parentID":"49,50,51,52,54,55,56",
+    "name": "作業机",
+    "description": "作業するための机",
+    "productor": "水野",
+    "date":"test",
+    "site":"test",
+    "image_path": "/images/134.jpg",
+    "model_path": "/models/134.obj"
+}

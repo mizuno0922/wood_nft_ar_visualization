@@ -1,0 +1,11 @@
+{
+    "ID":"64",
+    "parentID":"48",
+    "name": "解体材",
+    "description": "椅子の解体",
+    "productor": "水野",
+    "date":"test",
+    "site":"test",
+    "image_path": "/images/64.jpg",
+    "model_path": "/models/64.obj"
+}

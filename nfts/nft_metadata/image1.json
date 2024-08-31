@@ -1,0 +1,11 @@
+{
+    "ID":"000",
+    "parentID":"51,52",
+    "name": "test",
+    "description": "TestCube",
+    "productor": "test",
+    "date":"test",
+    "site":"test",
+    "image_path": "/images/test.jpg",
+    "model_path": "/models/test.obj"
+}

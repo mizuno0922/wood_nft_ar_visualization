@@ -1,0 +1,11 @@
+{
+    "ID":"143",
+    "parentID":"49,50,51,52,54,55,56,57,58,59,60,61,62,63,64,135",
+    "name": "机",
+    "description": "作業するための机と棚",
+    "productor": "水野",
+    "date":"test",
+    "site":"test",
+    "image_path": "/images/143.jpg",
+    "model_path": "/models/143.obj"
+}

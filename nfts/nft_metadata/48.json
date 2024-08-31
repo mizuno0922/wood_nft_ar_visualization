@@ -1,0 +1,11 @@
+{
+    "ID":"48",
+    "parentID":"0",
+    "name": "椅子",
+    "description": "椅子",
+    "productor": "桑原",
+    "date":"test",
+    "site":"test",
+    "image_path": "/images/48.jpg",
+    "model_path": "/models/test.obj"
+}

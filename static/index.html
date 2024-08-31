@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オブジェクト検出</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <video id="camera-feed" autoplay playsinline></video>
+    <div id="ar-overlay"></div>
+    <div id="info-display" class="info-box">
+        <h2 id="object-name"></h2>
+        <p id="object-description"></p>
+        <p id="object-id"></p>
+        <p id="object-parent-id"></p>
+        <p id="object-productor"></p>
+        <p id="object-date"></p>
+        <p id="object-site"></p>
+        <p id="match-info"></p>
+        <p id="confidence-info"></p>
+        <p id="match-rate-info"></p>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
