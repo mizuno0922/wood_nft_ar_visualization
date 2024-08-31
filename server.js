@@ -27,22 +27,25 @@ const pythonProcess = spawn('python3', ['app.py']);
 
 pythonProcess.stdout.on('data', (data) => {
   console.log(`Python output: ${data}`);
+  try {
+    const result = JSON.parse(data);
+    console.log('Parsed Python output:', result);
+    if (result.error) {
+      io.emit('error', result);
+    } else if ('get_parent_info' in result) {
+      io.emit('parent_info', result);
+    } else {
+      io.emit('detection_result', result);
+    }
+  } catch (error) {
+    console.error('Error parsing Python output:', error);
+    console.error('Raw Python output:', data.toString());
+    io.emit('error', { error: 'Server error processing Python output' });
+  }
 });
 
 pythonProcess.stderr.on('data', (data) => {
   console.error(`Python error: ${data}`);
-});
-
-pythonProcess.stdout.on('data', (data) => {
-  try {
-    const result = JSON.parse(data);
-    console.log('Sending detection result to client:', result);
-    io.emit('detection_result', result);
-  } catch (error) {
-    console.error('Error parsing Python output:', error);
-    console.error('Raw Python output:', data.toString());
-    io.emit('detection_result', { error: 'Server error processing detection result' });
-  }
 });
 
 io.on('connection', (socket) => {
@@ -52,19 +55,14 @@ io.on('connection', (socket) => {
     pythonProcess.stdin.write(JSON.stringify({image: imageData}) + '\n');
   });
 
+  socket.on('get_parent_info', (parentID) => {
+    console.log('Requesting parent info for:', parentID);
+    pythonProcess.stdin.write(JSON.stringify({get_parent_info: parentID}) + '\n');
+  });
+
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
-});
-
-pythonProcess.stdout.on('data', (data) => {
-  try {
-    const result = JSON.parse(data);
-    console.log('Sending detection result to client:', result);
-    io.emit('detection_result', result);
-  } catch (error) {
-    console.error('Error parsing Python output:', error);
-  }
 });
 
 const PORT = process.env.PORT || 3000;
@@ -73,4 +71,3 @@ server.listen(PORT, () => {
   console.log(`Server running on https://${ipAddress}:${PORT}`);
   console.log(`Also accessible on https://localhost:${PORT}`);
 });
-

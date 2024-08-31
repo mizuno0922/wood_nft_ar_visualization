@@ -152,6 +152,20 @@ def detect_object(data):
     except Exception as e:
         return {'error': str(e)}
 
+def get_parent_info(parent_id):
+    for model_name, metadata in reference_3d_models.items():
+        if metadata.get('ID') == parent_id:
+            return {
+                'detected': True,
+                'model_name': model_name,
+                'metadata': metadata,
+                'match_quality': 'N/A',
+                'confidence': 'N/A',
+                'num_matches': 'N/A',
+                'DETECTION_THRESHOLD': DETECTION_THRESHOLD
+            }
+    return {'error': f'Parent ID {parent_id} not found'}
+
 # メインの処理
 if __name__ == '__main__':
     try:
@@ -159,7 +173,10 @@ if __name__ == '__main__':
         for line in sys.stdin:
             try:
                 data = json.loads(line)
-                result = detect_object(data)
+                if 'get_parent_info' in data:
+                    result = get_parent_info(data['get_parent_info'])
+                else:
+                    result = detect_object(data)
                 print(json.dumps(result))
                 sys.stdout.flush()
             except json.JSONDecodeError:
