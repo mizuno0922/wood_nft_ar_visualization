@@ -33,8 +33,8 @@ setInterval(() => {
     socket.emit('detect_object', frame);
 }, 1000);
 
-socket.on('detection_result', (result) => {
-    console.log('Received detection result:', result); // デバッグ用ログ
+function updateDisplay(result) {
+    console.log('Updating display with result:', result);
     if (result.detected) {
         objectName.textContent = `検出されたモデル: ${result.model_name}`;
         matchInfo.textContent = `マッチ品質: ${result.match_quality}`;
@@ -45,10 +45,17 @@ socket.on('detection_result', (result) => {
             objectName.textContent = `名前: ${result.metadata.name}`;
             objectDescription.textContent = `説明: ${result.metadata.description}`;
             objectID.textContent = `ID: ${result.metadata.ID}`;
-            objectParentID.textContent = `parentID: ${result.metadata.parentID}`;
-            objectProductor.textContent = `productor: ${result.metadata.productor}`;
-            objectDate.textContent = `date: ${result.metadata.date}`;
-            objectSite.textContent = `site: ${result.metadata.site}`;
+            
+            // 親IDの処理
+            const parentIDs = result.metadata.parentID ? result.metadata.parentID.split(',') : [];
+            const parentLinks = parentIDs.map(id => 
+                `<a href="#" onclick="getParentInfo('${id.trim()}'); return false;">${id.trim()}</a>`
+            ).join(', ');
+            objectParentID.innerHTML = `親ID: ${parentLinks}`;
+            
+            objectProductor.textContent = `製作者: ${result.metadata.productor}`;
+            objectDate.textContent = `日付: ${result.metadata.date}`;
+            objectSite.textContent = `サイト: ${result.metadata.site}`;
         } else {
             objectDescription.textContent = '';
             objectID.textContent = '';
@@ -62,4 +69,26 @@ socket.on('detection_result', (result) => {
     } else {
         infoDisplay.style.display = 'none';
     }
+}
+
+function getParentInfo(parentID) {
+    console.log('Getting parent info for:', parentID);
+    socket.emit('get_parent_info', parentID);
+}
+
+socket.on('detection_result', (result) => {
+    console.log('Received detection result:', result);
+    updateDisplay(result);
 });
+
+socket.on('parent_info', (result) => {
+    console.log('Received parent info:', result);
+    if (result.error) {
+        console.error('Error getting parent info:', result.error);
+    } else {
+        updateDisplay(result);
+    }
+});
+
+// グローバルスコープにgetParentInfo関数を追加
+window.getParentInfo = getParentInfo;

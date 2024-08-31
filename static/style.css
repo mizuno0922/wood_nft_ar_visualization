@@ -44,3 +44,12 @@ body {
     border-radius: 10px;
     display: none;
 }
+
+#object-parent-id a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+#object-parent-id a:hover {
+    text-decoration: underline;
+}

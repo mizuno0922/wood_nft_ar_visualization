@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>オブジェクト検出</title>
+    <title>AR Object Detection</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,9 +17,11 @@
         <p id="object-productor"></p>
         <p id="object-date"></p>
         <p id="object-site"></p>
-        <p id="match-info"></p>
-        <p id="confidence-info"></p>
-        <p id="match-rate-info"></p>
+        <div id="detection-info">
+            <p id="match-info"></p>
+            <p id="confidence-info"></p>
+            <p id="match-rate-info"></p>
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
